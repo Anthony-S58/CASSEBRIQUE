@@ -25,6 +25,8 @@ function detectOrientation(){
 
 }
 
+document.body.style.cursor = 'none';
+
 
 
 // selection de la div canvas
@@ -35,8 +37,8 @@ var ctx = canvas.getContext("2d");
 var ballRadius = 10;
 var x = canvas.width / 2;
 var y = canvas.height - 30;
-var dx = 2;
-var dy = -2;
+var dx = 3;
+var dy = -3;
 
 // variable de la raquette
 var paddleHeight = 10;
@@ -67,8 +69,19 @@ for (var c = 0; c < brickColumnCount; c++) {
 // variable de score
 var score = 0;
 
+// variable de vie
+var lives = 2;
+
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("mousemove", mouseMoveHandler, false);
+
+function mouseMoveHandler(e) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if(relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth/2;
+    }
+}
 
 function keyDownHandler(e) {
     if (e.key == "Right" || e.key == "ArrowRight") {
@@ -97,7 +110,7 @@ function collisionDetection() {
                     b.status = 0;
                     score++;
                     if(score == brickRowCount*brickColumnCount) {
-                        alert("FELICITATIONS, Vous avez gagné!");
+                        alert("FELICITATIONS, Vous avez gagné !");
                         document.location.reload();
                         clearInterval(interval);
                     }
@@ -106,11 +119,17 @@ function collisionDetection() {
         }
     }
 }
-
+// dessin du score
 function drawScore() {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#0095DD";
     ctx.fillText("Score: "+score, 8, 20);
+}
+// dessin des vies
+function drawLives() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Lives: "+lives, canvas.width-65, 20);
 }
 
 // dessin de la balle
@@ -158,6 +177,7 @@ function draw() {
     drawPaddle();
     drawScore();
     collisionDetection();
+    drawLives();
 
     // rebond
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
@@ -173,11 +193,20 @@ function draw() {
             }
         }
         else {
-            alert("GAME OVER");
-            document.location.reload();
-            clearInterval(interval);
-        }
+            lives--;
+      if(!lives) {
+        alert("GAME OVER");
+        document.location.reload();
+      }
+      else {
+        x = canvas.width/2;
+        y = canvas.height-30;
+        dx = -3;
+        dy = -3;
+        paddleX = (canvas.width-paddleWidth)/2;
+      }
     }
+  }
         // vitesse de déplacement de la raquette
     if (rightPressed && paddleX < canvas.width - paddleWidth) {
         paddleX += 7;
