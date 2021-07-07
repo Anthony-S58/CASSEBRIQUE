@@ -1,3 +1,5 @@
+// rotation écran pour smartphone
+
 document.addEventListener("DOMContentLoaded", (event) => {
     window.addEventListener("resize", detectOrientation) ;
     detectOrientation() ;
@@ -25,22 +27,27 @@ function detectOrientation(){
 
 
 
-
+// selection de la div canvas
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
+
+// variable balle + direction
 var ballRadius = 10;
 var x = canvas.width / 2;
 var y = canvas.height - 30;
 var dx = 2;
 var dy = -2;
 
+// variable de la raquette
 var paddleHeight = 10;
 var paddleWidth = 75;
 var paddleX = (canvas.width - paddleWidth) / 2;
 
+// variables des fleches directionnelles
 var rightPressed = false;
 var leftPressed = false;
 
+// variables des briques
 var brickRowCount = 4;
 var brickColumnCount = 10;
 var brickWidth = 75;
@@ -90,6 +97,8 @@ function collisionDetection() {
         }
     }
 }
+
+// dessin de la balle
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
@@ -97,6 +106,8 @@ function drawBall() {
     ctx.fill();
     ctx.closePath();
 }
+
+// dessin de la raquette
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
@@ -104,6 +115,8 @@ function drawPaddle() {
     ctx.fill();
     ctx.closePath();
 }
+
+// dessin des briques
 function drawBricks() {
     for (var c = 0; c < brickColumnCount; c++) {
         for (var r = 0; r < brickRowCount; r++) {
@@ -122,6 +135,7 @@ function drawBricks() {
     }
 }
 
+// appel de fonction dessin
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks();
@@ -129,6 +143,7 @@ function draw() {
     drawPaddle();
     collisionDetection();
 
+    // rebond
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
         dx = -dx;
     }
@@ -144,10 +159,10 @@ function draw() {
         else {
             alert("GAME OVER");
             document.location.reload();
-            clearInterval(interval); // Needed for Chrome to end game
+            clearInterval(interval);
         }
     }
-
+        // vitesse de déplacement de la raquette
     if (rightPressed && paddleX < canvas.width - paddleWidth) {
         paddleX += 7;
     }
@@ -158,44 +173,7 @@ function draw() {
     x += dx;
     y += dy;
 }
-
+// dessin de la balle pour le mouvement toutes les 10 millisecondes
 var interval = setInterval(draw, 10);
 
 
-// function draw() {
-    // efface le dessin à chaque nouvelle image
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // debut du dessin
-//     ctx.beginPath();
-    // dessin de la ballde
-//     ctx.arc(x, y, 10, 0, Math.PI*2);
-    // couleur de la balle
-//     ctx.fillStyle = "#0095DD";
-//     ctx.fill();
-//     ctx.closePath();
-    // effet de mouvement
-//     x += dx;
-//     y += dy;
-//   }
-    // nouvelle image toutes les 10 millisecondes
-// setInterval(draw, 10);
-
-// exemple dessin : carré plein, balle, rectangle vide juste bordure
-
-// ctx.beginPath();
-// ctx.rect(20, 40, 50, 50);
-// ctx.fillStyle = "#FF0000";
-// ctx.fill();
-// ctx.closePath();
-
-// ctx.beginPath();
-// ctx.arc(240, 160, 20, 0, Math.PI*2, false);
-// ctx.fillStyle = "green";
-// ctx.fill();
-// ctx.closePath();
-
-// ctx.beginPath();
-// ctx.rect(160, 10, 100, 40);
-// ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
-// ctx.stroke();
-// ctx.closePath();
