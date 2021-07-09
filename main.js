@@ -51,12 +51,13 @@ var leftPressed = false;
 
 // variables des briques
 var brickRowCount = 4;
-var brickColumnCount = 10;
+var brickColumnCount =10;
 var brickWidth = 75;
 var brickHeight = 20;
 var brickPadding = 5;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
+
 
 var bricks = [];
 for (var c = 0; c < brickColumnCount; c++) {
@@ -170,6 +171,9 @@ function drawBricks() {
 }
 
 // appel de fonction dessin
+
+start.addEventListener("click", function() {
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks();
@@ -206,7 +210,7 @@ function draw() {
         paddleX = (canvas.width-paddleWidth)/2;
       }
     }
-  }
+}
         // vitesse de déplacement de la raquette
     if (rightPressed && paddleX < canvas.width - paddleWidth) {
         paddleX += 7;
@@ -219,6 +223,6 @@ function draw() {
     y += dy;
 }
 // dessin de la balle pour le mouvement toutes les 10 millisecondes
-var interval = setInterval(draw, 10);
+var interval = setInterval(draw, 10)});
 
 

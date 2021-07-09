@@ -1,11 +1,17 @@
 * {
     padding: 0; margin: 0;
+   
+
     }
 
 body{
    
     background-color: black;
     color:white;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
    }
    #rotateScreen{
     display: none;
@@ -23,3 +29,10 @@ body{
    canvas {
     background: rgb(0, 0, 0); display: block; margin: 0 auto;
  }
+
+ .btn {
+     display: flex;
+     justify-content: center;
+     text-align: center;
+ }
+ 
